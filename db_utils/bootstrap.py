@@ -8,7 +8,7 @@ sql ='''CREATE TABLE IF NOT EXISTS logs(
    request_query TEXT,
    ners TEXT,
    execution_time FLOAT,
-   timestamp date
+   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 )'''
 cursor.execute(sql)
 conn.commit()

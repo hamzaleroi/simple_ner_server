@@ -6,7 +6,6 @@ from db_utils.crud import log_ners, get_ner_logs
 import json
 import time
 
-
 app = FastAPI(host="0.0.0.0", port=8000, reload=True)
 nlp = spacy.load("en_core_web_md")
 conn = mysql.connector.connect(
