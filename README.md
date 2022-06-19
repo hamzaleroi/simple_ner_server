@@ -75,7 +75,7 @@ Expected output:
 ```
 
 ### Log endpoint: 
-After the requests above, we can visualize the logs with a limit of 3. 
+After the requests above, we can visualize the logs with a limit of 3.   
 Command:  
 ```bash
 curl -X 'GET' \
