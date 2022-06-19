@@ -1,0 +1,11 @@
+name: spacy_env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - fastapi=0.78.0
+  - uvicorn=0.17.6
+  - gunicorn=20.1.0
+  - spacy=3.2.4
+  - mysql-connector-python=8.0.29
+  - sqlalchemy=1.4.32
