@@ -112,3 +112,9 @@ Expected output (without the timestamp information):
   }
 ]
 ```
+
+## Unit tests:  
+For unit tests, run the following command:  
+```bash
+docker-compose run --rm simplenerapi bash -c 'source ~/.bashrc && activate spacy_env && cd /app/tests && pytest'
+```

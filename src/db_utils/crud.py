@@ -4,15 +4,15 @@ from typing import Tuple
 import mysql.connector
 
 
-def log_ners(conn, ners: Tuple):
-    sql = "INSERT INTO logs (request_query, ners, execution_time) VALUES (%s, %s, %s);"
+def log_ners(conn, nes: Tuple,table: str='logs'):
+    sql = f"INSERT INTO {table} (request_query, nes, execution_time) VALUES (%s, %s, %s);"
     with conn.cursor() as cursor:
-        cursor.execute(sql, ners)
+        cursor.execute(sql, nes)
         conn.commit()
 
 
-def get_ner_logs(conn, limit: int):
-    sql = f"SELECT * from logs LIMIT {limit}"
+def get_ner_logs(conn, limit: int,table: str='logs'):
+    sql = f"SELECT * from {table} LIMIT {limit}"
     with conn.cursor() as cursor:
         cursor.execute(sql)
         results = cursor.fetchall()

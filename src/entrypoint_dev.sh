@@ -1,2 +1,2 @@
 source ~/.bashrc
-python app.py
+python main.py
