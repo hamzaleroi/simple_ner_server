@@ -28,5 +28,6 @@ services:
     restart: always
     volumes:
       - ./dump:/docker-entrypoint-initdb.d
+
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"

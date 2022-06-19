@@ -8,4 +8,3 @@ dependencies:
   - gunicorn=20.1.0
   - spacy=3.2.4
   - mysql-connector-python=8.0.29
-  - sqlalchemy=1.4.32

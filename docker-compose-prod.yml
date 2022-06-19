@@ -10,6 +10,10 @@ services:
       - 8000:8000
     volumes:
         - ./:/app
+    links:
+      - "db:database"
+    depends_on:
+      - db
   db:
     env_file: .env
     build: 
@@ -22,5 +26,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ${MYSQL_DB:-}
     restart: always
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d
+
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"
