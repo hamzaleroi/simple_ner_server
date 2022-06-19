@@ -7,6 +7,7 @@ import spacy
 import uvicorn
 from fastapi import FastAPI, HTTPException
 
+from db_utils import PARAMS
 from db_utils.crud import get_ner_logs, log_ners
 from ml_utils.ner_extractor import extract_named_entities
 
@@ -24,7 +25,10 @@ async def root(query: str) -> Dict:
     """
     try:
         conn = mysql.connector.connect(
-            user="user", password="password", host="db", database="logs"
+            user=PARAMS["user"],
+            password=PARAMS["password"],
+            host=PARAMS["host"],
+            database=PARAMS["database"],
         )
         start_time = time.time()
         nes = extract_named_entities(nlp, query)
@@ -50,7 +54,10 @@ async def root(limit: int = 1):
     """
     try:
         conn = mysql.connector.connect(
-            user="user", password="password", host="db", database="logs"
+            user=PARAMS["user"],
+            password=PARAMS["password"],
+            host=PARAMS["host"],
+            database=PARAMS["database"],
         )
         results = get_ner_logs(conn, limit=limit)
         conn.close()

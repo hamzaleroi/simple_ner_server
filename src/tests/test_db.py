@@ -1,16 +1,17 @@
+import sys
 import unittest
+
 import mysql.connector
 from fastapi.testclient import TestClient
-import sys
-sys.path.append("..")
-from main import app
-from db_utils import log_ners, get_ner_logs
 
+sys.path.append("..")
+from db_utils import PARAMS, get_ner_logs, log_ners
+from main import app
 
 client = TestClient(app)
 
-class TestDBMethods(unittest.TestCase):
 
+class TestDBMethods(unittest.TestCase):
     @classmethod
     def create_test_table(cls, conn):
         sql = """
@@ -24,7 +25,6 @@ class TestDBMethods(unittest.TestCase):
         """
         with conn.cursor() as cursor:
             cursor.execute(sql)
-
 
     @classmethod
     def truncate_table(cls, conn):
@@ -40,15 +40,29 @@ class TestDBMethods(unittest.TestCase):
 
     def test_log_ners(self):
         conn = mysql.connector.connect(
-            user="user", password="password", host="db", database="logs"
+            user=PARAMS["user"],
+            password=PARAMS["password"],
+            host=PARAMS["host"],
+            database=PARAMS["database"],
         )
         TestDBMethods.create_test_table(conn)
         TestDBMethods.truncate_table(conn)
-        log_ners(conn, table="test_logs", nes=("I am Hamza","{\"Hamza\": \"PERSON\"}", "0.05", ))
-        results = get_ner_logs(conn,table="test_logs", limit=1)
+        log_ners(
+            conn,
+            table="test_logs",
+            nes=(
+                "I am Hamza",
+                '{"Hamza": "PERSON"}',
+                "0.05",
+            ),
+        )
+        results = get_ner_logs(conn, table="test_logs", limit=1)
         TestDBMethods.drop_table(conn)
         conn.close()
-        self.assertEqual(list(results[0].values())[:-1],["I am Hamza",{"Hamza": "PERSON"}, 0.05])
-    
-if __name__ == '__main__':
+        self.assertEqual(
+            list(results[0].values())[:-1], ["I am Hamza", {"Hamza": "PERSON"}, 0.05]
+        )
+
+
+if __name__ == "__main__":
     unittest.main()
