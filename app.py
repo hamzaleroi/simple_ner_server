@@ -24,7 +24,7 @@ async def root(query:str):
     return ners
 
 @app.get("/logs/{limit}")
-async def root(limit:int):
+async def root(limit:int=1):
     conn = mysql.connector.connect(
     user='user', password='password', host='db', database='logs'
     )
