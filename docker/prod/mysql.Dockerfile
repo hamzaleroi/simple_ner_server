@@ -2,5 +2,6 @@ FROM --platform=linux/amd64 mysql:8.0.26
 
 ARG MYSQL_USER
 ARG MYSQL_PASSWORD
-RUN  apt-get update && apt-get install -y python3-pymysql
-CMD ["--default-authentication-plugin=mysql_native_password"]
+COPY ./dump/dump.sql /tmp
+
+CMD ["mysqld","--default-authentication-plugin=mysql_native_password","--init-file=/tmp/dump.sql"]
