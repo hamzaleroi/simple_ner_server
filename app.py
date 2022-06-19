@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import mysql.connector
 import spacy
 import uvicorn
-from db_utils.crud import log_ners
+from db_utils.crud import log_ners, get_ner_logs
 import json
 import time
 
@@ -21,13 +21,12 @@ async def root(query:str):
     doc = nlp(query)
     ners = dict( [(item.text, item.label_) for item in doc.ents])
     log_list = (query,json.dumps(ners),time.time() - start_time,)
-    log_ners(conn,log_list)
+    log_ners(conn,ners=log_list)
     return ners
 
 @app.get("/logs/{limit}")
 async def root(limit:int):
-    
-    return ["log"]*limit
+    return get_ner_logs(conn, limit=limit)
 
 
 if __name__ == "__main__":
